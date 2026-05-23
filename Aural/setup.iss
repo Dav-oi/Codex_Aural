@@ -2,7 +2,7 @@
 ; Author: Dave_oi  QQ: 2221513107
 
 #define MyAppName "Aural"
-#define MyAppVersion "1.0"
+#define MyAppVersion "1.1"
 #define MyAppPublisher "Dav-oi"
 #define MyAppURL "https://github.com/Dav-oi/Codex_Aural"
 
@@ -18,7 +18,7 @@ DefaultDirName={userdocs}\Codex\Aural
 DefaultGroupName={#MyAppName}
 AllowNoIcons=yes
 OutputDir=.\
-OutputBaseFilename=Aural-Setup-v1.0
+OutputBaseFilename=Aural-Setup-v1.1
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
@@ -57,23 +57,23 @@ var
 begin
   if CurStep = ssPostInstall then
   begin
-    PostInstallPath := ExpandConstant(''{app}\post_install.ps1'');
+    PostInstallPath := ExpandConstant('{app}\post_install.ps1');
     if not SaveStringToFile(PostInstallPath,
-      ''$ErrorActionPreference = "Stop"'' + #13#10 +
-      ''Write-Host "Aural - Post-install setup..." -ForegroundColor Cyan'' + #13#10 +
-      ''# Check Python'' + #13#10 +
-      ''$python = Get-Command python -ErrorAction SilentlyContinue'' + #13#10 +
-      ''if (-not $python) {'' + #13#10 +
-      ''    Write-Host "WARNING: Python not found. Please install from https://python.org" -ForegroundColor Yellow'' + #13#10 +
-      ''} else {'' + #13#10 +
-      ''    Write-Host "Python: $($python.Source)" -ForegroundColor Green'' + #13#10 +
-      ''    Write-Host "Installing edge_tts..." -ForegroundColor Yellow'' + #13#10 +
-      ''    pip install edge_tts 2>&1 | Out-Null'' + #13#10 +
-      ''}'' + #13#10 +
-      ''# Execution policy'' + #13#10 +
-      ''try { Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force } catch {}'' + #13#10 +
-      ''Write-Host "Aural v1.0 installed! Restart your terminal." -ForegroundColor Green'',
+      '$ErrorActionPreference = "Stop"' + #13#10 +
+      'Write-Host "Aural - Post-install setup..." -ForegroundColor Cyan' + #13#10 +
+      '# Check Python' + #13#10 +
+      '$python = Get-Command python -ErrorAction SilentlyContinue' + #13#10 +
+      'if (-not $python) {' + #13#10 +
+      '    Write-Host "WARNING: Python not found. Please install from https://python.org" -ForegroundColor Yellow' + #13#10 +
+      '} else {' + #13#10 +
+      '    Write-Host "Python: $($python.Source)" -ForegroundColor Green' + #13#10 +
+      '    Write-Host "Installing edge_tts..." -ForegroundColor Yellow' + #13#10 +
+      '    pip install edge_tts 2>&1 | Out-Null' + #13#10 +
+      '}' + #13#10 +
+      '# Execution policy' + #13#10 +
+      'try { Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force } catch {}' + #13#10 +
+      'Write-Host "Aural v1.1 installed! Restart your terminal." -ForegroundColor Green',
       False) then
-      Log(''Failed to write post_install.ps1'');
+      Log('Failed to write post_install.ps1');
   end;
 end;

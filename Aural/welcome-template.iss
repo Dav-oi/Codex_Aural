@@ -5,7 +5,7 @@
 
 [Setup]
 AppName=Aural
-AppVersion=1.0
+AppVersion=1.1
 AppPublisher=Dave_
 DefaultDirName={userdocs}\Codex\Aural
 DisableWelcomePage=no
@@ -58,3 +58,4 @@ end;
 ;  │              [下一步]  [取消]            │
 ;  └─────────────────────────────────────────┘
 ; ═══════════════════════════════════════════════════════
+
