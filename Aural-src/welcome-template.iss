@@ -6,7 +6,7 @@
 [Setup]
 AppName=Aural
 AppVersion=1.1
-AppPublisher=Dave_
+AppPublisher=Dave-oioioi
 DefaultDirName={userdocs}\Codex\Aural
 DisableWelcomePage=no
 WizardStyle=modern
@@ -19,7 +19,7 @@ WizardStyle=modern
 WelcomeLabel1=【Aural — 让 Codex 开口说话！！！】
 
 ; 描述文字 (%n = 换行)
-WelcomeLabel2=Dav-oi/Codex_Aural%n%nhttps://github.com/Dav-oi/Codex_Aural
+WelcomeLabel2=Dave-oioioi/Codex_Aural%n%nhttps://github.com/Dave-oioioi/Codex_Aural
 
 ; ═══════════════════════════════════════════════════════
 ;  欢迎页样式定制
@@ -52,8 +52,8 @@ end;
 ;  ┌─────────────────────────────────────────┐
 ;  │  【Aural — 让 Codex 开口说话！！！】      │
 ;  │                                         │
-;  │  Dav-oi/Codex_Aural                     │
-;  │  https://github.com/Dav-oi/Codex_Aural  │
+;  │  Dave-oioioi/Codex_Aural                │
+;  │  https://github.com/Dave-oioioi/Codex_Aural │
 ;  │                                         │
 ;  │              [下一步]  [取消]            │
 ;  └─────────────────────────────────────────┘

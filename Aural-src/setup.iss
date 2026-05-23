@@ -1,10 +1,10 @@
 ﻿; Aural v1.0 - Inno Setup Wizard Installer
-; Author: Dave_oi  QQ: 2221513107
+; Author: Dave-oioioi  QQ: 2221513107
 
 #define MyAppName "Aural"
 #define MyAppVersion "1.1"
-#define MyAppPublisher "Dav-oi"
-#define MyAppURL "https://github.com/Dav-oi/Codex_Aural"
+#define MyAppPublisher "Dave-oioioi"
+#define MyAppURL "https://github.com/Dave-oioioi/Codex_Aural"
 
 [Setup]
 AppId={{A7F3C8D2-1B4E-4A5F-9E6C-3D8F2A1B7C5E}}
@@ -31,7 +31,7 @@ LicenseFile=README.md
 
 [Messages]
 WelcomeLabel1=【Aural — 让 Codex 开口说话！！！】
-WelcomeLabel2=Dav-oi/Codex_Aural%nhttps://github.com/Dav-oi/Codex_Aural
+WelcomeLabel2=Dave-oioioi/Codex_Aural%nhttps://github.com/Dave-oioioi/Codex_Aural
 
 [Files]
 ; Core scripts → fixed paths (not affected by install location)
