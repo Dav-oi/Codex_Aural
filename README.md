@@ -1,4 +1,5 @@
-﻿# Aural — 让 Codex 开口说话！！！
+﻿# Aural — 让 Codex 开口说话！！
+
 [Dave-oioioi/Codex_Aural](https://github.com/Dave-oioioi/Codex_Aural)
 
 ---
