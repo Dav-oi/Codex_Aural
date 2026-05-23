@@ -1,9 +1,4 @@
-﻿# Codex_Aural
-
-Aural — 让 Codex 开口说话！！！
-
-
----
+﻿# Aural — 让 Codex 开口说话！！！
 
 ## 项目
 
