@@ -1,21 +1,19 @@
-﻿# Codex_Text
+﻿# Codex_Aural
 
-Codex 相关项目工作区。
+Codex 全局语音朗读 + 开发工具。
 
 ---
 
 ## 项目
 
-**Aural** — Codex 全局语音朗读
-Edge TTS 晓晓语音，安装包 `Aural-Setup-v1.0.exe`
+**Aural** — Edge TTS 晓晓语音，安装包 `Aural-Setup-v1.0.exe`
 
-**Programs** — 开发工具下载索引
+**Programs** — CC-Switch / Codex Windows 版
 
 ---
 
 ## 开发日志
 
-2026-05-23  清理 Aural 目录，源文件集成到安装包
-2026-05-23  Aural v1.0 欢迎页 + 许可协议更新
-2026-05-23  添加 Node.js / 开发工具下载地址
+2026-05-24  拆分分支，大文件走 Release
+2026-05-23  Aural v1.0 欢迎页 + 许可协议
 2026-05-23  初始提交
