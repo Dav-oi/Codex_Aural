@@ -1,0 +1,7 @@
+interface:
+  display_name: "Aural TTS"
+  short_description: "Edge TTS 语音朗读 - 让 Codex 开口说话"
+  brand_color: "#D27800"
+  default_prompt: "Use $aural to narrate responses with Edge TTS xiaoxiao voice."
+policy:
+  allow_implicit_invocation: true
