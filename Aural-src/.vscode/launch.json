@@ -1,0 +1,20 @@
+﻿{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "TTS Speak",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "\/scripts/tts_speak.py",
+            "args": ["\"],
+            "console": "integratedTerminal"
+        }
+    ],
+    "inputs": [
+        {
+            "id": "text",
+            "type": "promptString",
+            "description": "输入要朗读的文字"
+        }
+    ]
+}
