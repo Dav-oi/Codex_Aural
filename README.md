@@ -18,3 +18,5 @@
 - `Aural-src/` — 源码学习工程（VS Code 可打开）
 - `aural-skill/` — Codex Skill 包（可分享安装）
 - `Programs/` — 开发工具
+
+当前安装包版本：`Aural-Setup-v1.2.exe`

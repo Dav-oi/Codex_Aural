@@ -1,4 +1,4 @@
----
+﻿---
 name: aural
 description: TTS voice narration for Codex responses using Edge TTS (xiaoxiao) with automatic fallback to Windows built-in TTS. Use when the user wants every assistant response to be read aloud, needs spoken output for accessibility, or wants auto-summarization before speech. Triggers on any task where audio narration is expected. Also use for install/config of TTS narration.
 ---
@@ -33,6 +33,12 @@ Start-Process powershell -WindowStyle Hidden `
 - 引擎：Edge TTS 晓晓 (xiaoxiao)，语速 +5%
 - 网络不通时自动降级到 Windows 内置 TTS
 - 临时文件播完自动清理
+
+## 并行处理机制（学习备注）
+
+1. `scripts/tts_bg.ps1` 内置串行队列，避免多任务同时朗读造成重叠。
+2. 并发时会在正文前播报来源：`来自对话 <thread-id>`。
+3. 对话来源使用环境变量 `CODEX_THREAD_ID`。
 
 ## 安装
 

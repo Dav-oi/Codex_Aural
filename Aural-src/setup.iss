@@ -1,8 +1,8 @@
-﻿; Aural v1.0 - Inno Setup Wizard Installer
+﻿; Aural v1.2 - Inno Setup Wizard Installer
 ; Author: Dave-oioioi  QQ: 2221513107
 
 #define MyAppName "Aural"
-#define MyAppVersion "1.1"
+#define MyAppVersion "1.2"
 #define MyAppPublisher "Dave-oioioi"
 #define MyAppURL "https://github.com/Dave-oioioi/Codex_Aural"
 
@@ -18,7 +18,7 @@ DefaultDirName={userdocs}\Codex\Aural
 DefaultGroupName={#MyAppName}
 AllowNoIcons=yes
 OutputDir=.\
-OutputBaseFilename=Aural-Setup-v1.1
+OutputBaseFilename=Aural-Setup-v1.2
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
@@ -72,8 +72,9 @@ begin
       '}' + #13#10 +
       '# Execution policy' + #13#10 +
       'try { Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force } catch {}' + #13#10 +
-      'Write-Host "Aural v1.1 installed! Restart your terminal." -ForegroundColor Green',
+      'Write-Host "Aural v1.2 installed! Restart your terminal." -ForegroundColor Green',
       False) then
       Log('Failed to write post_install.ps1');
   end;
 end;
+
