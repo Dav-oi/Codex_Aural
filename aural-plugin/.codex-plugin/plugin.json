@@ -1,31 +1,42 @@
 ﻿{
-  "name": "aural",
-  "version": "1.3.0",
-  "description": "让 Codex 开口说话 — Edge TTS 语音朗读技能，支持在线/离线双引擎、自动降级、串行队列防重叠",
-  "author": {
-    "name": "Dave-oioioi",
-    "url": "https://github.com/Dave-oioioi"
-  },
-  "homepage": "https://github.com/Dave-oioioi/Codex_Aural",
-  "repository": "https://github.com/Dave-oioioi/Codex_Aural",
-  "license": "MIT",
-  "keywords": ["tts", "speech", "voice", "edge-tts", "narrator", "audio", "朗读", "语音"],
-  "skills": "./skills/",
-  "interface": {
-    "displayName": "Aural TTS",
-    "shortDescription": "Edge TTS 语音朗读 — 让 Codex 开口说话",
-    "longDescription": "Aural 是 Windows 平台的 Codex 语音朗读技能。每次回复自动摘要后朗读，支持 Edge TTS 晓晓在线语音和 Windows 内置离线语音双引擎。首次运行自动安装依赖，网络不通时自动降级。内置串行队列机制，多任务并发时按序播放不重叠。",
-    "developerName": "Dave-oioioi",
-    "category": "Productivity",
-    "capabilities": ["Write"],
-    "websiteURL": "https://github.com/Dave-oioioi/Codex_Aural",
-    "defaultPrompt": [
-      "开启语音朗读，每条回复自动播报",
-      "切换离线 TTS 引擎",
-      "用晓晓的声音朗读这段文字"
-    ],
-    "brandColor": "#D27800",
-    "composerIcon": "./skills/aural/assets/icon-small.svg",
-    "logo": "./skills/aural/assets/icon-large.png"
-  }
+    "name":  "aural",
+    "version":  "1.4.0",
+    "description":  "让 Codex 开口说话 — Edge TTS 语音朗读技能，支持在线/离线双引擎、自动降级、串行队列防重叠",
+    "author":  {
+                   "name":  "Dave-oioioi",
+                   "url":  "https://github.com/Dave-oioioi"
+               },
+    "homepage":  "https://github.com/Dave-oioioi/Codex_Aural",
+    "repository":  "https://github.com/Dave-oioioi/Codex_Aural",
+    "license":  "MIT",
+    "keywords":  [
+                     "tts",
+                     "speech",
+                     "voice",
+                     "edge-tts",
+                     "narrator",
+                     "audio",
+                     "朗读",
+                     "语音"
+                 ],
+    "skills":  "./skills/",
+    "interface":  {
+                      "displayName":  "Aural TTS",
+                      "shortDescription":  "Edge TTS 语音朗读 — 让 Codex 开口说话",
+                      "longDescription":  "Aural 是 Windows 平台的 Codex 语音朗读技能。每次回复自动摘要后朗读，支持 Edge TTS 晓晓在线语音和 Windows 内置离线语音双引擎。首次运行自动安装依赖，网络不通时自动降级。内置串行队列机制，多任务并发时按序播放不重叠。",
+                      "developerName":  "Dave-oioioi",
+                      "category":  "Productivity",
+                      "capabilities":  [
+                                           "Write"
+                                       ],
+                      "websiteURL":  "https://github.com/Dave-oioioi/Codex_Aural",
+                      "defaultPrompt":  [
+                                            "开启语音朗读，每条回复自动播报",
+                                            "切换离线 TTS 引擎",
+                                            "用晓晓的声音朗读这段文字"
+                                        ],
+                      "brandColor":  "#D27800",
+                      "composerIcon":  "./skills/aural/assets/icon-small.svg",
+                      "logo":  "./skills/aural/assets/icon-large.png"
+                  }
 }
