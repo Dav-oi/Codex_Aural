@@ -34,23 +34,23 @@ WelcomeLabel2=Dave-oioioi/Codex_Aural%nhttps://github.com/Dave-oioioi/Codex_Aura
 [Files]
 ; Embedded Python (portable, zero-dependency)
 Source: "python-embed\*"; DestDir: "{userappdata}\.codex\skills\aural-skill\scripts\python-embed"; Flags: ignoreversion recursesubdirs
-; Core scripts ¡ú Aural skill directory (single source: aural-plugin)
-Source: "aural-plugin\skills\aural\scripts\tts_speak.py"; DestDir: "{userappdata}\.codex\skills\aural-skill\scripts"; Flags: ignoreversion
-Source: "aural-plugin\skills\aural\scripts\tts_bg.ps1"; DestDir: "{userappdata}\.codex\skills\aural-skill\scripts"; Flags: ignoreversion
-Source: "aural-plugin\skills\aural\scripts\install.ps1"; DestDir: "{userappdata}\.codex\skills\aural-skill\scripts"; Flags: ignoreversion
+; Core scripts ¡ú Aural skill directory (single source: plugin)
+Source: "plugin\skills\aural\scripts\tts_speak.py"; DestDir: "{userappdata}\.codex\skills\aural-skill\scripts"; Flags: ignoreversion
+Source: "plugin\skills\aural\scripts\tts_bg.ps1"; DestDir: "{userappdata}\.codex\skills\aural-skill\scripts"; Flags: ignoreversion
+Source: "plugin\skills\aural\scripts\install.ps1"; DestDir: "{userappdata}\.codex\skills\aural-skill\scripts"; Flags: ignoreversion
 ; Metadata files
-Source: "aural-plugin\skills\aural\SKILL.md"; DestDir: "{userappdata}\.codex\skills\aural-skill"; Flags: ignoreversion
-Source: "aural-plugin\skills\aural\agents\openai.yaml"; DestDir: "{userappdata}\.codex\skills\aural-skill\agents"; Flags: ignoreversion
-Source: "aural-plugin\skills\aural\assets\icon-small.svg"; DestDir: "{userappdata}\.codex\skills\aural-skill\assets"; Flags: ignoreversion
-Source: "aural-plugin\skills\aural\assets\icon-large.png"; DestDir: "{userappdata}\.codex\skills\aural-skill\assets"; Flags: ignoreversion
-Source: "aural-plugin\skills\aural\LICENSE.txt"; DestDir: "{userappdata}\.codex\skills\aural-skill"; Flags: ignoreversion
+Source: "plugin\skills\aural\SKILL.md"; DestDir: "{userappdata}\.codex\skills\aural-skill"; Flags: ignoreversion
+Source: "plugin\skills\aural\agents\openai.yaml"; DestDir: "{userappdata}\.codex\skills\aural-skill\agents"; Flags: ignoreversion
+Source: "plugin\skills\aural\assets\icon-small.svg"; DestDir: "{userappdata}\.codex\skills\aural-skill\assets"; Flags: ignoreversion
+Source: "plugin\skills\aural\assets\icon-large.png"; DestDir: "{userappdata}\.codex\skills\aural-skill\assets"; Flags: ignoreversion
+Source: "plugin\skills\aural\LICENSE.txt"; DestDir: "{userappdata}\.codex\skills\aural-skill"; Flags: ignoreversion
 ; Global AGENTS.md registration
 Source: "AGENTS.md"; DestDir: "{userappdata}\.codex"; Flags: ignoreversion
 ; PowerShell profile
-Source: "profile.ps1"; DestDir: "{userdocs}\WindowsPowerShell"; Flags: ignoreversion
+Source: "tools\profile.ps1"; DestDir: "{userdocs}\WindowsPowerShell"; Flags: ignoreversion
 ; Reference files
 Source: "README.md"; DestDir: "{app}"; Flags: ignoreversion
-Source: "tts_install.py"; DestDir: "{app}"; Flags: ignoreversion
+Source: "tools\tts_install.py"; DestDir: "{app}"; Flags: ignoreversion
 
 [Run]
 Filename: "powershell.exe"; Parameters: "-NoProfile -ExecutionPolicy Bypass -File ""{userappdata}\.codex\skills\aural-skill\scripts\install.ps1"" -Quiet"; \

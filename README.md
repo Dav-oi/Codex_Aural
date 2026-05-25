@@ -31,7 +31,7 @@
 
 ```powershell
 # 1. 将 skill 放入 Codex skills 目录
-Copy-Item -Recurse aural-plugin/skills/aural/ $env:CODEX_HOME\skills\aural-skill\
+Copy-Item -Recurse plugin/skills/aural/ $env:CODEX_HOME\skills\aural-skill\
 
 # 2. 运行安装脚本（含 AGENTS.md 注册）
 & "$env:CODEX_HOME\skills\aural-skill\scripts\install.ps1"
@@ -45,7 +45,13 @@ Copy-Item -Recurse aural-plugin/skills/aural/ $env:CODEX_HOME\skills\aural-skill
 
 | 目录 | 说明 |
 |------|------|
-| `aural-plugin/` | Codex Plugin — 唯一源（含 skill + plugin.json） |
+| `plugin/` | Codex Plugin — 唯一源（skill + plugin.json） |
+| `installer/` | Inno Setup 打包脚本 |
+| `tools/` | 开发工具 + 辅助脚本 |
+| `python-embed/` | Python 3.12 便携版（打包用，不入库） |
+| `releases/` | 编译产物 .exe（不入库） |
+------|------|
+| `plugin/` | Codex Plugin — 唯一源（含 skill + plugin.json） |
 | `python-embed/` | Python 3.12 便携版 + edge_tts（打包用，不入库） |
 | `releases/` | 编译产物 .exe（不入库） |
 
@@ -64,3 +70,4 @@ Copy-Item -Recurse aural-plugin/skills/aural/ $env:CODEX_HOME\skills\aural-skill
 ## License
 
 MIT © [Dave-oioioi](https://github.com/Dave-oioioi)
+
