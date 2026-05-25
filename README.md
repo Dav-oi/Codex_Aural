@@ -1,6 +1,6 @@
 ﻿# Aural — 让 Codex 开口说话
 
-[![Release](https://img.shields.io/badge/Release-v1.4-%23D27800)](https://github.com/Dave-oioioi/Codex_Aural/releases/tag/Latest-Version)
+[![Release](https://img.shields.io/badge/Release-v1.4.1-%23D27800)](https://github.com/Dave-oioioi/Codex_Aural/releases/tag/Latest-Version)
 [![License](https://img.shields.io/badge/License-MIT-green)](./LICENSE.txt)
 
 [Dave-oioioi/Codex_Aural](https://github.com/Dave-oioioi/Codex_Aural)
@@ -21,8 +21,9 @@
 
 ### 方式一：一键安装包（推荐）
 
-下载 [Aural-Setup-v1.4.exe](https://github.com/Dave-oioioi/Codex_Aural/releases/download/Latest-Version/Aural-Setup-v1.4.exe)，双击运行即可。安装完成后：
-- 自动安装 `edge_tts` 依赖
+下载 [Aural-Setup-v1.4.1.exe](https://github.com/Dave-oioioi/Codex_Aural/releases/download/Latest-Version/Aural-Setup-v1.4.1.exe)，双击运行即可。
+
+- **零依赖**：内置 Python 3.12 便携版 + `edge_tts` 预装，无需手动配置
 - 自动注册到 Codex 全局 `AGENTS.md`
 - 重启终端即可生效
 
