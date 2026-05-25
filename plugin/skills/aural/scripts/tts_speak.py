@@ -266,7 +266,7 @@ def main():
     parser.add_argument("--voice", "-v", default=DEFAULT_VOICE,
                         help=f"Edge TTS 语音名称（默认: {DEFAULT_VOICE}）")
     parser.add_argument("--rate", "-r", default=DEFAULT_RATE,
-                        help=f"语速（默认: {DEFAULT_RATE}，如 +10%% 或 -5%%）")
+                        help="语速（默认: %(default)s，如 +10%% 或 -5%%）")
     parser.add_argument("--condense", "-c", action="store_true",
                         help="自动提取关键句，压缩到 150 字以内")
     parser.add_argument("--list", action="store_true",
