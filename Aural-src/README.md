@@ -26,8 +26,8 @@
 ### 方式二：手动安装 Skill
 
 ```powershell
-# 1. 将 aural-skill/ 放入 Codex skills 目录
-Copy-Item -Recurse aural-skill/ $env:CODEX_HOME\skills\aural-skill\
+# 1. 将 aural-plugin/skills/aural/ 放入 Codex skills 目录
+Copy-Item -Recurse aural-plugin/skills/aural/ $env:CODEX_HOME\skills\aural-skill\
 
 # 2. 安装依赖
 & "$env:CODEX_HOME\skills\aural-skill\scripts\install.ps1"
@@ -43,7 +43,7 @@ Copy-Item -Recurse aural-skill/ $env:CODEX_HOME\skills\aural-skill\
 |------|------|
 | `Aural-exe/` | Inno Setup 安装包工程 + 编译产物 |
 | `Aural-src/` | 源码工程（VS Code 可打开调试） |
-| `aural-skill/` | Codex Skill 包（标准 skill 格式） |
+| `aural-plugin/` | Codex Plugin 包（含 skill + plugin.json） |
 
 ---
 
