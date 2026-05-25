@@ -13,7 +13,8 @@ $logFile = "$env:TEMP\tts_bg.log"
 $mutexName = "Global\CodexAuralTtsQueue"
 $threadId = if ($env:CODEX_THREAD_ID) { $env:CODEX_THREAD_ID } else { "unknown" }
 
-$skillDir = if ($env:CODEX_HOME) { "$env:CODEX_HOME\skills\aural-skill" } else { "$env:USERPROFILE\.codex\skills\aural-skill" }
+$scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+$skillDir = Split-Path -Parent $scriptDir
 $ttsScript = "$skillDir\scripts\tts_speak.py"
 
 # Priority: 1. Embedded Python  2. System Python

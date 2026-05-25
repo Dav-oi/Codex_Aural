@@ -31,10 +31,10 @@
 
 ```powershell
 # 1. 将 skill 放入 Codex skills 目录
-Copy-Item -Recurse plugin/skills/aural/ $env:CODEX_HOME\skills\aural-skill\
+Copy-Item -Recurse plugin/skills/aural/ $env:CODEX_HOME\skills\aural\
 
 # 2. 运行安装脚本（含 AGENTS.md 注册）
-& "$env:CODEX_HOME\skills\aural-skill\scripts\install.ps1"
+& "$env:CODEX_HOME\skills\aural\scripts\install.ps1"
 
 # 3. 重启终端
 ```

@@ -135,7 +135,7 @@ $auralBlock = @"
 3. 引擎：Edge TTS 晓晓 (xiaoxiao)，离线自动降级到系统 TTS
 4. 每次对话回复末尾都必须执行
 
-触发方式：参照 aural-skill 的 SKILL.md 执行 TTS 触发命令。
+触发方式：参照 aural 的 SKILL.md 执行 TTS 触发命令。
 "@
 
 if (-not (Test-Path $agentsFile)) {

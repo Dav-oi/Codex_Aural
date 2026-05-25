@@ -1,4 +1,4 @@
-﻿---
+---
 name: aural
 description: TTS voice narration for Codex responses using Edge TTS (xiaoxiao) with automatic fallback to Windows built-in TTS. Use when the user wants every assistant response to be read aloud, needs spoken output for accessibility, or wants auto-summarization before speech. Triggers on any task where audio narration is expected. Also use for install/config of TTS narration.
 ---
@@ -22,7 +22,7 @@ $text = "精简的摘要内容";
 if (-not $env:CODEX_HOME) { $env:CODEX_HOME = "$env:USERPROFILE\.codex" }; $text | Set-Content "$env:TEMP\codex_tts_text.txt" -Encoding UTF8;
 $text | Set-Content "$env:TEMP\codex_tts_response.txt" -Encoding UTF8;
 Start-Process powershell -NoNewWindow `
-  -ArgumentList "-NoProfile -File `"$env:CODEX_HOME\skills\aural-skill\scripts\tts_bg.ps1`""
+  -ArgumentList "-NoProfile -File `"$env:CODEX_HOME\skills\aural\scripts\tts_bg.ps1`""
 ```
 
 ## 规则
@@ -45,7 +45,7 @@ Start-Process powershell -NoNewWindow `
 ### 自动安装（推荐）
 
 ```powershell
-& "$env:CODEX_HOME\skills\aural-skill\scripts\install.ps1"
+& "$env:CODEX_HOME\skills\aural\scripts\install.ps1"
 ```
 
 一键检测 Python、安装 edge_tts、验证引擎。
