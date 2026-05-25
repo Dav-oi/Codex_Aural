@@ -45,16 +45,16 @@ Copy-Item -Recurse aural-plugin/skills/aural/ $env:CODEX_HOME\skills\aural-skill
 
 | 目录 | 说明 |
 |------|------|
-| `Aural-exe/` | Inno Setup 安装包工程 + 编译产物 |
-| `Aural-src/` | 源码工程（VS Code 可打开调试） |
-| `aural-plugin/` | Codex Plugin 包（含 plugin.json + skill） |
+| `aural-plugin/` | Codex Plugin — 唯一源（含 skill + plugin.json） |
+| `python-embed/` | Python 3.12 便携版 + edge_tts（打包用，不入库） |
+| `releases/` | 编译产物 .exe（不入库） |
 
 ---
 
 ## 技术栈
 
 - **TTS 引擎**: Edge TTS (edge_tts) / Windows SAPI
-- **音频播放**: Windows MCI API (winmm.dll)
+- **音频播放**: pygame mixer（静默，无窗口弹出）
 - **后台队列**: PowerShell 互斥锁 + 文件队列
 - **安装包**: Inno Setup 6
 - **全局集成**: `~/.codex/AGENTS.md` 自动注册
