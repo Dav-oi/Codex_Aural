@@ -1,4 +1,4 @@
-﻿<#
+<#
 .SYNOPSIS
     MCI 音频播放器 — 通过 Windows MCI API 播放 MP3 文件
 

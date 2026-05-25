@@ -1,9 +1,10 @@
-<#
+﻿<#
 .SYNOPSIS
     Aural TTS 后台触发器（串行队列版）
 
 .DESCRIPTION
-    使用“文件队列 + 全局互斥锁”确保并发触发时按顺序朗读，避免语音重叠。
+    使用"文件队列 + 全局互斥锁"确保并发触发时按顺序朗读，避免语音重叠。
+    启动时自动检测 edge_tts 依赖，不可用时自动安装或降级到系统 TTS。
 #>
 
 $textFile = "$env:TEMP\codex_tts_text.txt"
@@ -12,12 +13,30 @@ $logFile = "$env:TEMP\tts_bg.log"
 $mutexName = "Global\CodexAuralTtsQueue"
 $threadId = if ($env:CODEX_THREAD_ID) { $env:CODEX_THREAD_ID } else { "unknown" }
 
+$skillDir = if ($env:CODEX_HOME) { "$env:CODEX_HOME\skills\aural-skill" } else { "$env:USERPROFILE\.codex\skills\aural-skill" }
 $python = (Get-Command python -ErrorAction SilentlyContinue).Source
-$ttsScript = "$env:USERPROFILE\.codex\skills\speech\scripts\tts_speak.py"
+$ttsScript = "$skillDir\scripts\tts_speak.py"
 
 if (-not $python) {
     "$(Get-Date) | ERROR: Python not found" | Out-File $logFile -Append -Encoding UTF8
     exit 1
+}
+
+# === Bootstrap: 检测并安装 edge_tts 依赖 ===
+$useEdgeTts = $false
+$edgeCheck = & $python -c "import edge_tts; print('OK')" 2>&1
+if ($edgeCheck -eq "OK") {
+    $useEdgeTts = $true
+} else {
+    "$(Get-Date) | edge_tts not found, attempting auto-install..." | Out-File $logFile -Append -Encoding UTF8
+    & $python -m pip install edge_tts --quiet --disable-pip-version-check 2>&1 | Out-Null
+    $edgeCheck = & $python -c "import edge_tts; print('OK')" 2>&1
+    if ($edgeCheck -eq "OK") {
+        $useEdgeTts = $true
+        "$(Get-Date) | edge_tts auto-installed successfully" | Out-File $logFile -Append -Encoding UTF8
+    } else {
+        "$(Get-Date) | edge_tts unavailable, falling back to system TTS" | Out-File $logFile -Append -Encoding UTF8
+    }
 }
 
 if (-not (Test-Path $queueDir)) {
@@ -96,8 +115,13 @@ try {
                     $speechText = "来自对话 $threadHint。$content"
                 }
 
-                $result = & $python $ttsScript --voice xiaoxiao --condense $speechText 2>&1
-                "$(Get-Date) | exit=$LASTEXITCODE | file=$($next.Name) | $result" | Out-File $logFile -Append -Encoding UTF8
+                # 根据依赖可用性选择引擎
+                if ($useEdgeTts) {
+                    $result = & $python $ttsScript --voice xiaoxiao --condense $speechText 2>&1
+                } else {
+                    $result = & $python $ttsScript --system --condense $speechText 2>&1
+                }
+                "$(Get-Date) | exit=$LASTEXITCODE | engine=$(if ($useEdgeTts) {'edge'} else {'system'}) | file=$($next.Name) | $result" | Out-File $logFile -Append -Encoding UTF8
             }
         } finally {
             Remove-Item $next.FullName -Force -ErrorAction SilentlyContinue

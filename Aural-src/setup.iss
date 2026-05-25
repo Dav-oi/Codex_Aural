@@ -1,8 +1,8 @@
-﻿; Aural v1.2 - Inno Setup Wizard Installer
+﻿; Aural v1.3 - Inno Setup Wizard Installer
 ; Author: Dave-oioioi  QQ: 2221513107
 
 #define MyAppName "Aural"
-#define MyAppVersion "1.2"
+#define MyAppVersion "1.3"
 #define MyAppPublisher "Dave-oioioi"
 #define MyAppURL "https://github.com/Dave-oioioi/Codex_Aural"
 
@@ -18,7 +18,7 @@ DefaultDirName={userdocs}\Codex\Aural
 DefaultGroupName={#MyAppName}
 AllowNoIcons=yes
 OutputDir=.\
-OutputBaseFilename=Aural-Setup-v1.2
+OutputBaseFilename=Aural-Setup-v1.3
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
@@ -34,10 +34,11 @@ WelcomeLabel1=【Aural — 让 Codex 开口说话！！！】
 WelcomeLabel2=Dave-oioioi/Codex_Aural%nhttps://github.com/Dave-oioioi/Codex_Aural
 
 [Files]
-; Core scripts → fixed paths (not affected by install location)
-Source: "tts_speak.py"; DestDir: "{userappdata}\.codex\skills\speech\scripts"; Flags: ignoreversion
-Source: "play_mp3.ps1"; DestDir: "{userappdata}\.codex\skills\speech\scripts"; Flags: ignoreversion
-Source: "tts_bg.ps1"; DestDir: "{userappdata}\.codex\skills\speech\scripts"; Flags: ignoreversion
+; Core scripts → Aural skill directory
+Source: "tts_speak.py"; DestDir: "{userappdata}\.codex\skills\aural-skill\scripts"; Flags: ignoreversion
+Source: "play_mp3.ps1"; DestDir: "{userappdata}\.codex\skills\aural-skill\scripts"; Flags: ignoreversion
+Source: "tts_bg.ps1"; DestDir: "{userappdata}\.codex\skills\aural-skill\scripts"; Flags: ignoreversion
+Source: "install.ps1"; DestDir: "{userappdata}\.codex\skills\aural-skill\scripts"; Flags: ignoreversion
 Source: "AGENTS.md"; DestDir: "{userappdata}\.codex"; Flags: ignoreversion
 Source: "profile.ps1"; DestDir: "{userdocs}\WindowsPowerShell"; Flags: ignoreversion
 
@@ -46,7 +47,7 @@ Source: "README.md"; DestDir: "{app}"; Flags: ignoreversion
 Source: "tts_install.py"; DestDir: "{app}"; Flags: ignoreversion
 
 [Run]
-Filename: "powershell.exe"; Parameters: "-NoProfile -ExecutionPolicy Bypass -File ""{app}\post_install.ps1"""; \
+Filename: "powershell.exe"; Parameters: "-NoProfile -ExecutionPolicy Bypass -File ""{userappdata}\.codex\skills\aural-skill\scripts\install.ps1"" -Quiet"; \
     Flags: runhidden waituntilterminated; StatusMsg: "Installing edge_tts and configuring..."; \
     Description: "Install dependencies and configure"
 
@@ -61,20 +62,15 @@ begin
     if not SaveStringToFile(PostInstallPath,
       '$ErrorActionPreference = "Stop"' + #13#10 +
       'Write-Host "Aural - Post-install setup..." -ForegroundColor Cyan' + #13#10 +
-      '# Check Python' + #13#10 +
-      '$python = Get-Command python -ErrorAction SilentlyContinue' + #13#10 +
-      'if (-not $python) {' + #13#10 +
-      '    Write-Host "WARNING: Python not found. Please install from https://python.org" -ForegroundColor Yellow' + #13#10 +
-      '} else {' + #13#10 +
-      '    Write-Host "Python: $($python.Source)" -ForegroundColor Green' + #13#10 +
-      '    Write-Host "Installing edge_tts..." -ForegroundColor Yellow' + #13#10 +
-      '    pip install edge_tts 2>&1 | Out-Null' + #13#10 +
+      '# Run main installer' + #13#10 +
+      '$installScript = "$env:USERPROFILE\.codex\skills\aural-skill\scripts\install.ps1"' + #13#10 +
+      'if (Test-Path $installScript) {' + #13#10 +
+      '    & $installScript' + #13#10 +
       '}' + #13#10 +
       '# Execution policy' + #13#10 +
       'try { Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force } catch {}' + #13#10 +
-      'Write-Host "Aural v1.2 installed! Restart your terminal." -ForegroundColor Green',
+      'Write-Host "Aural v1.3 installed! Restart your terminal." -ForegroundColor Green',
       False) then
       Log('Failed to write post_install.ps1');
   end;
 end;
-
