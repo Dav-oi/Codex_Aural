@@ -8,20 +8,18 @@
       2. 安装/升级 edge_tts 包
       3. 验证 Edge TTS 引擎可正常工作
       4. 检查 Windows 内置 TTS 作为离线后备
+      5. 注册到 Codex 全局 AGENTS.md
 
     运行方式：
       powershell -File install.ps1
-    或从 SKILL.md 触发：
-      & "$env:CODEX_HOME\skills\aural-skill\scripts\install.ps1"
 #>
 
 param(
-    [switch]$Quiet     # 静默模式：减少输出，适合自动触发
+    [switch]$Quiet
 )
 
 $ErrorActionPreference = "Continue"
 $skillDir = Split-Path -Parent $MyInvocation.MyCommand.Path
-$skillRoot = Split-Path -Parent $skillDir
 
 function Write-Step {
     param([string]$Message, [string]$Status)
@@ -65,7 +63,6 @@ $result = & python $pipArgs 2>&1
 if ($LASTEXITCODE -eq 0) {
     Write-Step "edge_tts installed successfully" "ok"
 } else {
-    # 重试：有时需要 --user
     $pipArgs += "--user"
     $result = & python $pipArgs 2>&1
     if ($LASTEXITCODE -eq 0) {
@@ -79,8 +76,7 @@ if ($LASTEXITCODE -eq 0) {
 # ============================================================
 # Step 3: 验证 Edge TTS
 # ============================================================
-$verifyScript = Join-Path $skillDir "tts_speak.py"
-if (Test-Path $verifyScript) {
+if (Test-Path (Join-Path $skillDir "tts_speak.py")) {
     $verifyResult = & python -c "import edge_tts; print('OK')" 2>&1
     if ($verifyResult -eq "OK") {
         Write-Step "Edge TTS engine verified" "ok"
@@ -88,7 +84,7 @@ if (Test-Path $verifyScript) {
         Write-Step "Edge TTS import check failed, will use system TTS fallback" "warn"
     }
 } else {
-    Write-Step "tts_speak.py not found at: $verifyScript" "fail"
+    Write-Step "tts_speak.py not found" "fail"
 }
 
 # ============================================================
@@ -109,6 +105,39 @@ try {
 }
 
 # ============================================================
+# Step 5: 注册到 Codex 全局 AGENTS.md
+# ============================================================
+$codexHome = if ($env:CODEX_HOME) { $env:CODEX_HOME } else { "$env:USERPROFILE\.codex" }
+$agentsFile = "$codexHome\AGENTS.md"
+
+$auralBlock = @"
+
+## Aural TTS — 全局语音朗读
+
+每次回复后自动使用 Aural 进行语音朗读：
+
+1. 将回复内容精简为 1-3 句核心摘要（≤100 字）
+2. 写入临时文件触发后台朗读
+3. 引擎：Edge TTS 晓晓 (xiaoxiao)，离线自动降级到系统 TTS
+4. 每次对话回复末尾都必须执行
+
+触发方式：参照 aural-skill 的 SKILL.md 执行 TTS 触发命令。
+"@
+
+if (-not (Test-Path $agentsFile)) {
+    "# Global AGENTS.md`n`n$auralBlock" | Out-File $agentsFile -Encoding UTF8
+    Write-Step "Created global AGENTS.md with Aural registration" "ok"
+} else {
+    $current = Get-Content $agentsFile -Raw -Encoding UTF8
+    if ($current -match "## Aural TTS") {
+        Write-Step "Aural already registered in AGENTS.md" "ok"
+    } else {
+        "`n`n$auralBlock" | Out-File $agentsFile -Append -Encoding UTF8
+        Write-Step "Aural registered in global AGENTS.md" "ok"
+    }
+}
+
+# ============================================================
 # Done
 # ============================================================
 if (-not $Quiet) {
@@ -116,5 +145,6 @@ if (-not $Quiet) {
     Write-Host "=== Aural installation complete ===" -ForegroundColor Green
     Write-Host "  Primary engine : Edge TTS (xiaoxiao)"
     Write-Host "  Fallback       : Windows built-in TTS"
+    Write-Host "  AGENTS.md      : registered"
     Write-Host "  Scripts        : $skillDir"
 }
