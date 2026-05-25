@@ -162,17 +162,31 @@ async def _generate_edge(text: str, voice: str, rate: str, out_path: str):
 
 
 def _play_mp3(file_path: str):
-    """Play MP3 using Windows default player with hidden window.
+    """Play MP3 silently using pygame mixer (no UI, no external player).
 
     Args:
         file_path: Absolute path to MP3 file.
     """
-    subprocess.run(
-        ["powershell", "-NoProfile", "-Command",
-         f"Start-Process -FilePath '{file_path}' -WindowStyle Hidden -Wait"],
-        capture_output=True,
-        timeout=120
-    )
+    import time
+    try:
+        import os as _os; _os.environ.setdefault('PYGAME_HIDE_SUPPORT_PROMPT', 'hide')
+        import pygame
+    except ImportError:
+        # Fallback: use default player if pygame not available
+        subprocess.run(
+            ["powershell", "-NoProfile", "-Command",
+             f"Start-Process -FilePath '{file_path}' -WindowStyle Hidden -Wait"],
+            capture_output=True,
+            timeout=120
+        )
+        return
+
+    pygame.mixer.init()
+    pygame.mixer.music.load(file_path)
+    pygame.mixer.music.play()
+    while pygame.mixer.music.get_busy():
+        time.sleep(0.1)
+    pygame.mixer.quit()
 
 
 def speak_edge(text: str, voice_name: str = DEFAULT_VOICE, rate: str = DEFAULT_RATE):
