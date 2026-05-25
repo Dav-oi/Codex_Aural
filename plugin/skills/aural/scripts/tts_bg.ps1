@@ -13,6 +13,69 @@ $logFile = "$env:TEMP\tts_bg.log"
 $mutexName = "Global\CodexAuralTtsQueue"
 $threadId = if ($env:CODEX_THREAD_ID) { $env:CODEX_THREAD_ID } else { "unknown" }
 
+function Normalize-SourceName {
+    param([string]$Name)
+
+    if (-not $Name -or -not $Name.Trim()) {
+        return $null
+    }
+
+    $clean = $Name.Trim()
+    $clean = $clean -replace '[_\-]+', ' '
+    $clean = $clean -replace '\s+', ' '
+    $clean = $clean -replace '\.(git|repo)$', ''
+
+    if ($clean.Length -le 18) {
+        return $clean
+    }
+
+    $words = @($clean -split ' ' | Where-Object { $_ })
+    if ($words.Count -gt 1) {
+        $short = ($words | Select-Object -First 3) -join ' '
+        if ($short.Length -le 18) {
+            return $short
+        }
+    }
+
+    return $clean.Substring(0, 18)
+}
+
+function Get-SourceName {
+    $candidates = @(
+        $env:AURAL_SOURCE_NAME,
+        $env:CODEX_THREAD_TITLE,
+        $env:CODEX_CONVERSATION_TITLE,
+        $env:CODEX_TASK_NAME,
+        $env:CODEX_PROJECT_NAME,
+        $env:CODEX_WORKSPACE_NAME
+    )
+
+    foreach ($candidate in $candidates) {
+        $name = Normalize-SourceName $candidate
+        if ($name) {
+            return $name
+        }
+    }
+
+    $location = Get-Location -ErrorAction SilentlyContinue
+    if ($location -and $location.Provider.Name -eq "FileSystem") {
+        $leaf = Split-Path -Leaf $location.ProviderPath
+        $name = Normalize-SourceName $leaf
+        if ($name) {
+            return $name
+        }
+    }
+
+    if ($threadId -and $threadId -ne "unknown") {
+        $shortThread = if ($threadId.Length -gt 8) { $threadId.Substring(0, 8) } else { $threadId }
+        return "对话 $shortThread"
+    }
+
+    return "未知来源"
+}
+
+$sourceName = Get-SourceName
+
 $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $skillDir = Split-Path -Parent $scriptDir
 $ttsScript = "$skillDir\scripts\tts_speak.py"
@@ -58,7 +121,8 @@ if (-not (Test-Path $queueDir)) {
 function Add-ToQueue {
     param(
         [string]$Content,
-        [string]$Thread
+        [string]$Thread,
+        [string]$Source
     )
     if (-not $Content -or -not $Content.Trim()) {
         return
@@ -67,6 +131,7 @@ function Add-ToQueue {
     $path = Join-Path $queueDir $name
     $payload = @{
         thread = $Thread
+        source = $Source
         text = $Content
     } | ConvertTo-Json -Compress
     $payload | Set-Content $path -Encoding UTF8
@@ -75,7 +140,7 @@ function Add-ToQueue {
 if (Test-Path $textFile) {
     $text = Get-Content $textFile -Raw -Encoding UTF8
     Remove-Item $textFile -Force -ErrorAction SilentlyContinue
-    Add-ToQueue -Content $text -Thread $threadId
+    Add-ToQueue -Content $text -Thread $threadId -Source $sourceName
 }
 
 $mutex = New-Object System.Threading.Mutex($false, $mutexName)
@@ -107,24 +172,29 @@ try {
             } catch {
                 $payload = [pscustomobject]@{
                     thread = "unknown"
+                    source = "未知来源"
                     text = $payloadRaw
                 }
             }
 
             $content = [string]$payload.text
             $sourceThread = [string]$payload.thread
+            $sourceName = Normalize-SourceName ([string]$payload.source)
 
             if ($content -and $content.Trim()) {
                 $speechText = $content
                 if ($isParallel) {
-                    $threadHint = if ($sourceThread -and $sourceThread -ne "unknown" -and $sourceThread.Length -gt 8) {
-                        $sourceThread.Substring(0, 8)
-                    } elseif ($sourceThread) {
-                        $sourceThread
-                    } else {
-                        "unknown"
+                    $sourceHint = $sourceName
+                    if (-not $sourceHint) {
+                        $sourceHint = if ($sourceThread -and $sourceThread -ne "unknown" -and $sourceThread.Length -gt 8) {
+                            "对话 " + $sourceThread.Substring(0, 8)
+                        } elseif ($sourceThread) {
+                            "对话 " + $sourceThread
+                        } else {
+                            "未知来源"
+                        }
                     }
-                    $speechText = "来自对话 $threadHint。$content"
+                    $speechText = "来自 $sourceHint。$content"
                 }
 
                 # 根据依赖可用性选择引擎
