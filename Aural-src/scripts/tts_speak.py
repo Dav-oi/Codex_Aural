@@ -162,16 +162,14 @@ async def _generate_edge(text: str, voice: str, rate: str, out_path: str):
 
 
 def _play_mp3(file_path: str):
-    """
-    调用同目录下的 play_mp3.ps1 播放 MP3 音频。
-    play_mp3.ps1 使用 Windows MCI API (winmm.dll) 播放，零额外依赖。
-    
+    """Play MP3 using Windows default player with hidden window.
+
     Args:
-        file_path: MP3 文件绝对路径
+        file_path: Absolute path to MP3 file.
     """
-    play_script = Path(__file__).parent / "play_mp3.ps1"
     subprocess.run(
-        ["powershell", "-NoProfile", "-File", str(play_script), "-Path", file_path],
+        ["powershell", "-NoProfile", "-Command",
+         f"Start-Process -FilePath '{file_path}' -WindowStyle Hidden -Wait"],
         capture_output=True,
         timeout=120
     )

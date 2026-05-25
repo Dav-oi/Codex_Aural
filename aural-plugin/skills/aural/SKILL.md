@@ -19,7 +19,7 @@ description: TTS voice narration for Codex responses using Edge TTS (xiaoxiao) w
 
 ```powershell
 $text = "精简的摘要内容";
-$text | Set-Content "$env:TEMP\codex_tts_text.txt" -Encoding UTF8;
+if (-not $env:CODEX_HOME) { $env:CODEX_HOME = "$env:USERPROFILE\.codex" }; $text | Set-Content "$env:TEMP\codex_tts_text.txt" -Encoding UTF8;
 $text | Set-Content "$env:TEMP\codex_tts_response.txt" -Encoding UTF8;
 Start-Process powershell -NoNewWindow `
   -ArgumentList "-NoProfile -File `"$env:CODEX_HOME\skills\aural-skill\scripts\tts_bg.ps1`""
