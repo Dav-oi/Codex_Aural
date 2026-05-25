@@ -1,6 +1,6 @@
 ﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
   <defs>
-    <linearGradient id="cloudGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="circleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#A594F9" />
       <stop offset="40%" stop-color="#6246EA" />
       <stop offset="100%" stop-color="#0018CC" />
@@ -11,26 +11,18 @@
     </filter>
   </defs>
 
-  <!-- Cloud body — centered, balanced elliptical arcs -->
-  <path d="M 72 55
-           C 72 36  96 32  110 38
-           C 130 22  158 28  158 55
-           C 180 58  178 88  158 98
-           C 164 128 132 144 110 138
-           C 90  152 66  140  62  118
-           C 38  114  36  80   56  70
-           C 52  46  72  40  72  55 Z"
-        fill="url(#cloudGrad)" />
+  <!-- Perfect circle -->
+  <circle cx="100" cy="100" r="70" fill="url(#circleGrad)" />
 
-  <!-- Play triangle — centered within cloud -->
-  <path d="M 70 74 L 88 96 L 70 118"
+  <!-- Play triangle — centered -->
+  <path d="M 75 74 L 93 96 L 75 118"
         fill="none"
         stroke="#FFFFFF"
         stroke-width="9"
         stroke-linecap="round"
         stroke-linejoin="round" />
 
-  <!-- Equalizer bars — proportional spacing -->
+  <!-- Equalizer bars -->
   <g fill="#FFFFFF">
     <rect x="106" y="86" width="7" height="16" rx="3.5" />
     <rect x="118" y="76" width="7" height="34" rx="3.5" />
@@ -38,9 +30,9 @@
     <rect x="142" y="90" width="7" height="8"  rx="3.5" />
   </g>
 
-  <!-- Sound wave arcs — balanced spacing from right edge -->
+  <!-- Sound wave arcs -->
   <g fill="none" stroke="#A594F9" stroke-width="5" stroke-linecap="round" opacity="0.85" filter="url(#glow)">
-    <path d="M 166 78 A 30 30 0 0 1 166 114" />
-    <path d="M 176 68 A 42 42 0 0 1 176 124" stroke-width="4" opacity="0.5" />
+    <path d="M 178 78 A 30 30 0 0 1 178 114" />
+    <path d="M 188 68 A 42 42 0 0 1 188 124" stroke-width="4" opacity="0.5" />
   </g>
 </svg>
