@@ -1,8 +1,5 @@
-﻿; Aural v1.4 - Inno Setup Wizard Installer
-; Author: Dave-oioioi  QQ: 2221513107
-
-#define MyAppName "Aural"
-#define MyAppVersion "1.4"
+﻿; Aural v1.4.1"Aural"
+#define MyAppVersion "1.4.1"
 #define MyAppPublisher "Dave-oioioi"
 #define MyAppURL "https://github.com/Dave-oioioi/Codex_Aural"
 
@@ -18,7 +15,7 @@ DefaultDirName={userdocs}\Codex\Aural
 DefaultGroupName={#MyAppName}
 AllowNoIcons=yes
 OutputDir=.\
-OutputBaseFilename=Aural-Setup-v1.4
+OutputBaseFilename=Aural-Setup-v1.4.1
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
@@ -34,6 +31,8 @@ WelcomeLabel1=【Aural — 让 Codex 开口说话！！！】
 WelcomeLabel2=Dave-oioioi/Codex_Aural%nhttps://github.com/Dave-oioioi/Codex_Aural
 
 [Files]
+; Embedded Python (portable, zero-dependency)
+Source: "python-embed\*"; DestDir: "{userappdata}\.codex\skills\aural-skill\scripts\python-embed"; Flags: ignoreversion recursesubdirs
 ; Core scripts → Aural skill directory
 Source: "tts_speak.py"; DestDir: "{userappdata}\.codex\skills\aural-skill\scripts"; Flags: ignoreversion
 Source: "play_mp3.ps1"; DestDir: "{userappdata}\.codex\skills\aural-skill\scripts"; Flags: ignoreversion
@@ -41,11 +40,9 @@ Source: "tts_bg.ps1"; DestDir: "{userappdata}\.codex\skills\aural-skill\scripts"
 Source: "install.ps1"; DestDir: "{userappdata}\.codex\skills\aural-skill\scripts"; Flags: ignoreversion
 Source: "AGENTS.md"; DestDir: "{userappdata}\.codex"; Flags: ignoreversion
 Source: "profile.ps1"; DestDir: "{userdocs}\WindowsPowerShell"; Flags: ignoreversion
-
-; Reference files → install directory (user can choose)
+; Reference files → install directory
 Source: "README.md"; DestDir: "{app}"; Flags: ignoreversion
 Source: "tts_install.py"; DestDir: "{app}"; Flags: ignoreversion
-
 [Run]
 Filename: "powershell.exe"; Parameters: "-NoProfile -ExecutionPolicy Bypass -File ""{userappdata}\.codex\skills\aural-skill\scripts\install.ps1"" -Quiet"; \
     Flags: runhidden waituntilterminated; StatusMsg: "Installing edge_tts and configuring..."; \
@@ -69,8 +66,9 @@ begin
       '}' + #13#10 +
       '# Execution policy' + #13#10 +
       'try { Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force } catch {}' + #13#10 +
-      'Write-Host "Aural v1.4 installed! Restart your terminal." -ForegroundColor Green',
+      'Write-Host "Aural v1.4.1" -ForegroundColor Green',
       False) then
       Log('Failed to write post_install.ps1');
   end;
 end;
+

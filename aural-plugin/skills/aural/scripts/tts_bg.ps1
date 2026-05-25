@@ -14,8 +14,19 @@ $mutexName = "Global\CodexAuralTtsQueue"
 $threadId = if ($env:CODEX_THREAD_ID) { $env:CODEX_THREAD_ID } else { "unknown" }
 
 $skillDir = if ($env:CODEX_HOME) { "$env:CODEX_HOME\skills\aural-skill" } else { "$env:USERPROFILE\.codex\skills\aural-skill" }
-$python = (Get-Command python -ErrorAction SilentlyContinue).Source
 $ttsScript = "$skillDir\scripts\tts_speak.py"
+
+# Priority: 1. Embedded Python  2. System Python
+$embeddedPython = "$skillDir\scripts\python-embed\python.exe"
+$systemPython = (Get-Command python -ErrorAction SilentlyContinue).Source
+if (Test-Path $embeddedPython) {
+    $python = $embeddedPython
+} elseif ($systemPython) {
+    $python = $systemPython
+} else {
+    "$(Get-Date) | ERROR: Python not found" | Out-File $logFile -Append -Encoding UTF8
+    exit 1
+}
 
 if (-not $python) {
     "$(Get-Date) | ERROR: Python not found" | Out-File $logFile -Append -Encoding UTF8
@@ -133,3 +144,4 @@ try {
     }
     $mutex.Dispose()
 }
+

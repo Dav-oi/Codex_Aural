@@ -36,7 +36,7 @@ function Write-Step {
 }
 
 # ============================================================
-# Step 1: 检测 Python
+# Step 1: 检测 Python（缺失时自动通过 winget 安装）
 # ============================================================
 $python = $null
 try {
@@ -49,12 +49,26 @@ try {
         $pyVer = & python3 --version 2>&1
         Write-Step "Python3 found: $pyVer" "ok"
     } catch {
-        Write-Step "Python not found. Please install Python 3.8+ from https://python.org" "fail"
-        exit 1
+        Write-Step "Python not found, attempting winget auto-install..." "warn"
+        try {
+            $wingetResult = winget install Python.Python.3.12 --silent --accept-package-agreements --accept-source-agreements 2>&1
+            if ($LASTEXITCODE -eq 0) { Write-Step "Python 3.12 installed via winget" "ok" }
+            else { throw "winget failed" }
+        } catch {
+            Write-Step "Python not installed. Please install manually from https://python.org" "fail"
+            exit 1
+        }
+        # Refresh PATH and re-detect
+        $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+        try {
+            $python = (Get-Command python -ErrorAction Stop).Source
+            Write-Step "Python detected after install: $python" "ok"
+        } catch {
+            Write-Step "Python installed but not found in PATH. Please reboot." "fail"
+            exit 1
+        }
     }
-}
-
-# ============================================================
+}# ============================================================
 # Step 2: 安装 edge_tts
 # ============================================================
 Write-Step "Installing edge_tts..." "info"
@@ -148,3 +162,4 @@ if (-not $Quiet) {
     Write-Host "  AGENTS.md      : registered"
     Write-Host "  Scripts        : $skillDir"
 }
+
